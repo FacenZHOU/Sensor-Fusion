@@ -76,8 +76,94 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 	// If distance is smaller than threshold count it as inlier
 
 	// Return indicies of inliers from fitted line with most inliers
+
+	while(maxIterations--)
+	{
+
+		std::unordered_set<int> inliers;
+		while(inliers.size() < 2)
+			inliers.insert(rand()%(cloud->points.size()));
+
+		float x1, y1, x2, y2;
+
+		auto itr = inliers.begin();
+		x1 = cloud->points[*itr].x;
+		y1 = cloud->points[*itr].y;
+		itr++;
+		x2 = cloud->points[*itr].x;
+		y2 = cloud->points[*itr].y;
+
+		float a = (y1-y2);
+		float b = (x2-x1);
+		float c = (x1*y2-x2*y1);
+
+		for (int index = 0; index < cloud->points.size(); index++)
+		{
+			if (inliers.count(index)>0)
+				continue;
+
+			pcl::PointXYZ point = cloud->points[index];
+			float x3 = point.x;
+			float y3 = point.y;
+
+			float d = fabs(a*x3+b*y3+c)/sqrt(a*a+b*b);
+
+			if (d<=distanceTol)
+				inliers.insert(index);
+		}
+
+		if (inliers.size()>inliersResult.size())
+		{
+			inliersResult = inliers;
+		}
+	
+	}
 	
 	return inliersResult;
+
+}
+
+std::unordered_set<int> RansacPlane(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int maxIterations, float distanceTol)
+{
+	std::unordered_set<int> InliersResult;
+	srand(time(NULL));
+
+	for (size_t i = 0; i<maxIterations; i++)
+	{
+		std::unordered_set<int> tempInliersResult;
+		while (tempInliersResult.size() < 3)
+		{
+			tempInliersResult.insert((rand() % cloud->points.size()));
+		}
+
+		auto itr = tempInliersResult.begin();
+		pcl::PointXYZ randPoint1 = cloud->points[*itr];
+		itr++;
+		pcl::PointXYZ randPoint2 = cloud->points[*itr];
+		itr++;
+		pcl::PointXYZ randPoint3 = cloud->points[*itr];
+
+		double planeAValue = ((randPoint2.y-randPoint1.y)*(randPoint3.z-randPoint1.z)) - ((randPoint2.z-randPoint1.z)*(randPoint3.y-randPoint1.y));
+		double planeBValue = ((randPoint2.z-randPoint1.z)*(randPoint3.x-randPoint1.x)) - ((randPoint2.x-randPoint1.x)*(randPoint3.z-randPoint1.z));
+		double planeCValue = ((randPoint2.x-randPoint1.x)*(randPoint3.y-randPoint1.y)) - ((randPoint2.y-randPoint1.y)*(randPoint3.x-randPoint1.x));
+		double planeDValue = -((planeAValue*randPoint1.x) + (planeBValue*randPoint1.y) + (planeCValue*randPoint1.z));
+
+		for (size_t i =0; i < cloud->points.size(); i++)
+		{
+			if(tempInliersResult.count(i) > 0) continue;
+
+			pcl::PointXYZ point = cloud->points[i];
+			double distance = fabs((planeAValue * point.x) + (planeBValue * point.y) + (planeCValue * point.z) + planeDValue) / (sqrt((planeAValue*planeAValue) + (planeBValue*planeBValue) + (planeCValue*planeCValue)));
+
+			if (distance <= distanceTol)
+				tempInliersResult.insert(i);
+		}
+
+		if (tempInliersResult.size()>InliersResult.size())
+			InliersResult = tempInliersResult;
+	}
+
+	return InliersResult;
 
 }
 
@@ -88,11 +174,13 @@ int main ()
 	pcl::visualization::PCLVisualizer::Ptr viewer = initScene();
 
 	// Create data
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
+	// pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData3D();
 	
 
 	// TODO: Change the max iteration and distance tolerance arguments for Ransac function
-	std::unordered_set<int> inliers = Ransac(cloud, 0, 0);
+	// std::unordered_set<int> inliers = Ransac(cloud, 10, 1.0);
+	std::unordered_set<int> inliers = RansacPlane(cloud, 50, 0.5);
 
 	pcl::PointCloud<pcl::PointXYZ>::Ptr  cloudInliers(new pcl::PointCloud<pcl::PointXYZ>());
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOutliers(new pcl::PointCloud<pcl::PointXYZ>());
