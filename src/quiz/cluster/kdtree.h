@@ -1,5 +1,5 @@
-/* \author Aaron Brown */
-// Quiz on implementing kd tree
+#ifndef __KDTREE_H__
+#define __KDTREE_H__
 
 #include "../../render/render.h"
 
@@ -36,22 +36,58 @@ struct KdTree
 		delete root;
 	}
 
-	void insertHelper(Node** node, int depth, std::vector<float> point, int id)
+	void insert(std::vector<float> point, int id)
 	{
-		if (*node==NULL)
-			*node = new Node(point,id);
+		if (root==NULL)
+			root = new Node(point,id);
 		else
 		{
+			Node* ptr = root;
+
+			int depth = 0;
+
+			while (ptr != nullptr)
+			{
+				const int index = depth % point.size();
+				const float ref_src = ptr->point[index];
+				const float ref_to_comp = point[index];
+
+				if (ref_to_comp < ref_src)
+				{
+					if (ptr->left == nullptr)
+					{
+						ptr->left = new Node(point, id);
+						break;
+					}
+
+					ptr = ptr->left;
+				}
+				else if (ref_to_comp > ref_src)
+				{
+					if (ptr->right == nullptr)
+					{
+						ptr->right = new Node(point, id);
+						break;
+					}
+					ptr = ptr->right;
+				}
+
+				depth++;
+			}
+			
+			/*
 			int cd = depth % 2;
 
 			if (point[cd] < ((*node)->point[cd]))
 				insertHelper(&((*node)->left), depth+1, point, id);
 			else
 				insertHelper(&((*node)->right), depth+1, point, id);
+			*/
 		}
 
 	}
 
+	/*
 	void insert(std::vector<float> point, int id)
 	{
 		// TODO: Fill in this function to insert a new point into the tree
@@ -59,22 +95,37 @@ struct KdTree
 		insertHelper(&root,0,point,id);
 
 	}
+	*/
 
 	void searchHelper(std::vector<float> target, Node* node, int depth, float distanceTol, std::vector<int>& ids)
 	{
 		if(node!=NULL)
-		{
-			if ((node->point[0]>=(target[0]-distanceTol) && node->point[0] <= (target[0]+distanceTol)) && (node->point[1] >= (target[1]-distanceTol) && (node->point[1] <= (target[1]+distanceTol))))
-			{
-				float distance = sqrt((node->point[0]-target[0])*(node->point[0]-target[0]) + (node->point[1]-target[1])*(node->point[1]-target[1]));
-				if (distance <= distanceTol)
-					ids.push_back(node->id);
+		{	
+			const int index = depth % target.size();
+			const float ref_node = node->point[index];
+			const float ref_target = target[index];
 
+			bool check = true;
+			for (size_t i=0; i<target.size(); i++)
+			{
+				check &= (std::abs(node->point[i] - target[i]) <= distanceTol);
 			}
 
-			if ((target[depth%2]-distanceTol) < node->point[depth%2])
+			if (check)
+			{
+				double dist = 0.0;
+				for (size_t i = 0; i<target.size(); i++)
+				{ 
+					dist += (node->point[i] - target[i]) * (node->point[i] - target[i]);
+				}
+
+				if (dist <= (distanceTol * distanceTol)) {ids.push_back(node->id);}
+			}
+
+
+			if ((ref_target-distanceTol) < ref_node)
 				searchHelper(target, node->left, depth+1, distanceTol, ids);
-			if ((target[depth%2]+distanceTol)>node->point[depth%2])
+			if ((ref_target+distanceTol) > ref_node)
 				searchHelper(target,node->right, depth+1, distanceTol, ids);
 		}
 	}
@@ -92,5 +143,5 @@ struct KdTree
 };
 
 
-
+#endif
 

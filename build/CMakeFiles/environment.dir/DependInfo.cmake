@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/environment.cpp" "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles/environment.dir/src/environment.cpp.o"
   "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/processPointClouds.cpp" "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles/environment.dir/src/processPointClouds.cpp.o"
+  "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/euclidean_cluster.cpp" "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o"
   "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/render/render.cpp" "/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles/environment.dir/src/render/render.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

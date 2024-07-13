@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/environment.dir/src/environment.cpp.o"
+  "CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o"
   "CMakeFiles/environment.dir/src/render/render.cpp.o"
   "CMakeFiles/environment.dir/src/processPointClouds.cpp.o"
   "environment.pdb"

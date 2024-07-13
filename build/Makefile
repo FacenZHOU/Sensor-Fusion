@@ -177,6 +177,33 @@ src/processPointClouds.cpp.s:
 	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/processPointClouds.cpp.s
 .PHONY : src/processPointClouds.cpp.s
 
+src/quiz/cluster/euclidean_cluster.o: src/quiz/cluster/euclidean_cluster.cpp.o
+
+.PHONY : src/quiz/cluster/euclidean_cluster.o
+
+# target to build an object file
+src/quiz/cluster/euclidean_cluster.cpp.o:
+	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o
+.PHONY : src/quiz/cluster/euclidean_cluster.cpp.o
+
+src/quiz/cluster/euclidean_cluster.i: src/quiz/cluster/euclidean_cluster.cpp.i
+
+.PHONY : src/quiz/cluster/euclidean_cluster.i
+
+# target to preprocess a source file
+src/quiz/cluster/euclidean_cluster.cpp.i:
+	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.i
+.PHONY : src/quiz/cluster/euclidean_cluster.cpp.i
+
+src/quiz/cluster/euclidean_cluster.s: src/quiz/cluster/euclidean_cluster.cpp.s
+
+.PHONY : src/quiz/cluster/euclidean_cluster.s
+
+# target to generate assembly for a file
+src/quiz/cluster/euclidean_cluster.cpp.s:
+	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.s
+.PHONY : src/quiz/cluster/euclidean_cluster.cpp.s
+
 src/render/render.o: src/render/render.cpp.o
 
 .PHONY : src/render/render.o
@@ -219,6 +246,9 @@ help:
 	@echo "... src/processPointClouds.o"
 	@echo "... src/processPointClouds.i"
 	@echo "... src/processPointClouds.s"
+	@echo "... src/quiz/cluster/euclidean_cluster.o"
+	@echo "... src/quiz/cluster/euclidean_cluster.i"
+	@echo "... src/quiz/cluster/euclidean_cluster.s"
 	@echo "... src/render/render.o"
 	@echo "... src/render/render.i"
 	@echo "... src/render/render.s"

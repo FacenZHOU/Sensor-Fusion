@@ -81,9 +81,33 @@ CMakeFiles/environment.dir/src/environment.cpp.o.provides: CMakeFiles/environmen
 CMakeFiles/environment.dir/src/environment.cpp.o.provides.build: CMakeFiles/environment.dir/src/environment.cpp.o
 
 
+CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o: CMakeFiles/environment.dir/flags.make
+CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o: ../src/quiz/cluster/euclidean_cluster.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o -c /home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/euclidean_cluster.cpp
+
+CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/euclidean_cluster.cpp > CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.i
+
+CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/euclidean_cluster.cpp -o CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.s
+
+CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.requires:
+
+.PHONY : CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.requires
+
+CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.provides: CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.requires
+	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.provides.build
+.PHONY : CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.provides
+
+CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.provides.build: CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o
+
+
 CMakeFiles/environment.dir/src/render/render.cpp.o: CMakeFiles/environment.dir/flags.make
 CMakeFiles/environment.dir/src/render/render.cpp.o: ../src/render/render.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/environment.dir/src/render/render.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/environment.dir/src/render/render.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/environment.dir/src/render/render.cpp.o -c /home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/render/render.cpp
 
 CMakeFiles/environment.dir/src/render/render.cpp.i: cmake_force
@@ -107,7 +131,7 @@ CMakeFiles/environment.dir/src/render/render.cpp.o.provides.build: CMakeFiles/en
 
 CMakeFiles/environment.dir/src/processPointClouds.cpp.o: CMakeFiles/environment.dir/flags.make
 CMakeFiles/environment.dir/src/processPointClouds.cpp.o: ../src/processPointClouds.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/environment.dir/src/processPointClouds.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/environment.dir/src/processPointClouds.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/environment.dir/src/processPointClouds.cpp.o -c /home/facen/Desktop/SFND_Lidar_Obstacle_Detection/src/processPointClouds.cpp
 
 CMakeFiles/environment.dir/src/processPointClouds.cpp.i: cmake_force
@@ -132,6 +156,7 @@ CMakeFiles/environment.dir/src/processPointClouds.cpp.o.provides.build: CMakeFil
 # Object files for target environment
 environment_OBJECTS = \
 "CMakeFiles/environment.dir/src/environment.cpp.o" \
+"CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o" \
 "CMakeFiles/environment.dir/src/render/render.cpp.o" \
 "CMakeFiles/environment.dir/src/processPointClouds.cpp.o"
 
@@ -139,6 +164,7 @@ environment_OBJECTS = \
 environment_EXTERNAL_OBJECTS =
 
 environment: CMakeFiles/environment.dir/src/environment.cpp.o
+environment: CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o
 environment: CMakeFiles/environment.dir/src/render/render.cpp.o
 environment: CMakeFiles/environment.dir/src/processPointClouds.cpp.o
 environment: CMakeFiles/environment.dir/build.make
@@ -416,7 +442,7 @@ environment: /usr/lib/x86_64-linux-gnu/libvtksys-6.3.so.6.3.0
 environment: /usr/lib/x86_64-linux-gnu/libproj.so
 environment: /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.3.so.6.3.0
 environment: CMakeFiles/environment.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable environment"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/facen/Desktop/SFND_Lidar_Obstacle_Detection/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable environment"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/environment.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -425,6 +451,7 @@ CMakeFiles/environment.dir/build: environment
 .PHONY : CMakeFiles/environment.dir/build
 
 CMakeFiles/environment.dir/requires: CMakeFiles/environment.dir/src/environment.cpp.o.requires
+CMakeFiles/environment.dir/requires: CMakeFiles/environment.dir/src/quiz/cluster/euclidean_cluster.cpp.o.requires
 CMakeFiles/environment.dir/requires: CMakeFiles/environment.dir/src/render/render.cpp.o.requires
 CMakeFiles/environment.dir/requires: CMakeFiles/environment.dir/src/processPointClouds.cpp.o.requires
 
