@@ -1,54 +1,56 @@
 #include "kdtree.h"
 
-void clusterHelper(int indice, const std::vector<std::vector<float>> points, std::vector<int>& cluster, std::vector<bool> processed, KdTree* tree, float distanceTol)
-{
+void clusterHelper(const int id,
+                             const std::vector<std::vector<float>>& points,
+                             KdTree* tree,
+                             std::vector<int>& cluster,
+                             std::vector<bool>& processed,
+                             const float distanceTol) {
+  // Obtain the point for the current id
+  const std::vector<float> point = points[id];
 
-	processed[indice] = true;
-	cluster.push_back(indice);
-	
-	std::vector<int> nearst = tree->search(points[indice],distanceTol);
+  // Mark point as processed
+  processed[id] = true;
 
-	for(int id : nearst)
-	{
-		if(!processed[id])
-		{
-			clusterHelper(id, points, cluster, processed, tree, distanceTol);
-		}
-		
-	}
+  // Add point to cluster
+  cluster.push_back(id);
 
-	std::cout << "erfolgreich" << std::endl;
-	
+  // Find nearby ids
+  const std::vector<int> nearby_ids = tree->search(point, distanceTol);
+
+  // Iterate over each nearby id
+  for (const int query_id : nearby_ids) {
+    // If not processed, process it
+    if (!processed[query_id]) {
+      clusterHelper(query_id, points, tree, cluster, processed,
+                              distanceTol);
+    }
+  }
 }
 
-std::vector<std::vector<int>> euclideanCluster(const std::vector<std::vector<float>>& points, KdTree* tree, float distanceTol)
-{
+std::vector<std::vector<int>> euclideanCluster(
+    const std::vector<std::vector<float>>& points,  // Input points
+    KdTree* tree,         // KdTree containing said points
+    float distanceTol) {  // distance tolerance
 
-	// TODO: Fill out this function to return list of indices for each cluster
+  // TODO: Fill out this function to return list of indices for each cluster
+  std::vector<std::vector<int>> clusters;
 
-	std::vector<std::vector<int>> clusters;
+  // Status vector to tell us which points have been processed
+  std::vector<bool> processed(points.size(), false);
 
-	// Status vector to tell us which points have been processed
-	std::vector<bool> processed(points.size(), false);
+  // Iterate through each point
+  for (size_t i = 0; i < points.size(); i++) {
+    if (processed[i]) { continue; }
 
-	// Iterate through each point
-	for (size_t i = 0; i < points.size(); i++)
-	{
-		if (processed[i]) {continue;}
+    std::vector<int> cluster;  // Create cluster
 
-		std::vector<int> cluster;
-		
-		std::cout << points.size() << std::endl;
+    // Run proximity function
+    clusterHelper(i, points, tree, cluster, processed, distanceTol);
 
-		clusterHelper(i, points, cluster, processed, tree, distanceTol);
+    // Add to clusters vector
+    clusters.push_back(cluster);
+  }
 
-		clusters.push_back(cluster);
-		
-		
-	}
-	 
-	std::cout << "####### erfolgreich" << std::endl;
- 
-	return clusters;
-
+  return clusters;
 }
