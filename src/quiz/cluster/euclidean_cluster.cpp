@@ -11,8 +11,14 @@ void clusterHelper(int indice, const std::vector<std::vector<float>> points, std
 	for(int id : nearst)
 	{
 		if(!processed[id])
+		{
 			clusterHelper(id, points, cluster, processed, tree, distanceTol);
+		}
+		
 	}
+
+	std::cout << "erfolgreich" << std::endl;
+	
 }
 
 std::vector<std::vector<int>> euclideanCluster(const std::vector<std::vector<float>>& points, KdTree* tree, float distanceTol)
@@ -22,22 +28,26 @@ std::vector<std::vector<int>> euclideanCluster(const std::vector<std::vector<flo
 
 	std::vector<std::vector<int>> clusters;
 
+	// Status vector to tell us which points have been processed
 	std::vector<bool> processed(points.size(), false);
 
-	int i = 0;
-	while(i < points.size())
+	// Iterate through each point
+	for (size_t i = 0; i < points.size(); i++)
 	{
-		if(processed[i])
-		{
-			i++;
-			continue;
-		}
+		if (processed[i]) {continue;}
 
 		std::vector<int> cluster;
+		
+		std::cout << points.size() << std::endl;
+
 		clusterHelper(i, points, cluster, processed, tree, distanceTol);
+
 		clusters.push_back(cluster);
-		i++;
+		
+		
 	}
+	 
+	std::cout << "####### erfolgreich" << std::endl;
  
 	return clusters;
 

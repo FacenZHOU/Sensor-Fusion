@@ -145,6 +145,9 @@ int main (int argc, char** argv)
     std::cout << "starting enviroment" << std::endl;
     std::string data;
 
+    // data = "../src/sensors/data/pcd/data_1";
+
+    
     if(argc != 2)
     {
         data = "../src/sensors/data/pcd/data_1";
@@ -159,6 +162,7 @@ int main (int argc, char** argv)
         }
         data = "../src/sensors/data/pcd/" + ds;
     }
+    
 
     pcl::visualization::PCLVisualizer::Ptr viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
     CameraAngle setAngle = XY;
