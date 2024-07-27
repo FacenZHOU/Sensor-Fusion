@@ -50,13 +50,15 @@ typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::FilterCloud(ty
     auto startTime = std::chrono::steady_clock::now();
 
     // TODO:: Fill in the function to do voxel grid point reduction and region based filtering
+    // Step #1 - VoxelGrid quantization
     pcl::VoxelGrid<PointT> vg;
-    typename pcl::PointCloud<PointT>::Ptr cloudFiltered (new pcl::PointCloud<PointT>);
+    typename pcl::PointCloud<PointT>::Ptr cloudFiltered (new pcl::PointCloud<PointT>());
     vg.setInputCloud(cloud);
     vg.setLeafSize(filterRes, filterRes, filterRes);
     vg.filter(*cloudFiltered);
 
-    typename pcl::PointCloud<PointT>::Ptr cloudRegion (new pcl::PointCloud<PointT>);
+     // Step #2 - Crop to the region of interest
+    typename pcl::PointCloud<PointT>::Ptr cloudRegion (new pcl::PointCloud<PointT>());
 
     pcl::CropBox<PointT> region(true);
     region.setMin(minPoint);
@@ -64,14 +66,17 @@ typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::FilterCloud(ty
     region.setInputCloud(cloudFiltered);
     region.filter(*cloudRegion);
 
+    // remove the roof pixels
+    
     std::vector<int> indices;
 
     pcl::CropBox<PointT> roof(true);
-    roof.setMin(Eigen::Vector4f (-1.5, -1.7, -1, 1));
-    roof.setMax(Eigen::Vector4f (2.6, 1.7, -.4, 1));
+    roof.setMin(Eigen::Vector4f (-2, -2, -1, 1));
+    roof.setMax(Eigen::Vector4f (3, 2, 1, 1));
     roof.setInputCloud(cloudRegion);
     roof.filter(indices);
 
+    // remove the roof points
     pcl::PointIndices::Ptr inliers {new pcl::PointIndices};
     for (int point : indices)
         inliers->indices.push_back(point);
@@ -81,13 +86,13 @@ typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::FilterCloud(ty
     extract.setIndices (inliers);
     extract.setNegative(true);
     extract.filter (*cloudRegion);
-
+    
 
     auto endTime = std::chrono::steady_clock::now();
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
     std::cout << "filtering took " << elapsedTime.count() << " milliseconds" << std::endl;
 
-    return cloud;
+    return cloudRegion;
 
 }
 
@@ -98,7 +103,8 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
   // TODO: Create two new point clouds, one cloud with obstacles and other with segmented plane
     typename pcl::PointCloud<PointT>::Ptr obstCloud (new pcl::PointCloud<PointT> ());
     typename pcl::PointCloud<PointT>::Ptr planeCloud (new pcl::PointCloud<PointT> ());
-
+    
+    /*
     for (int index : inliers->indices)
         planeCloud->points.push_back(cloud->points[index]);
 
@@ -112,6 +118,22 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
 
     std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> segResult(obstCloud, planeCloud);
     // std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> segResult(cloud, cloud);
+    */
+
+    // Create the filtering object
+    pcl::ExtractIndices<PointT> extract;
+
+    extract.setInputCloud(cloud);
+    extract.setIndices(inliers);
+    //extract the inliers
+    extract.setNegative(false);   // False means points belonging to inliers remain, inliers are the points belonging to the road.
+    extract.filter(*planeCloud);
+    //extract the outliers
+    extract.setNegative(true);   // True means points belonging to outliers remain, outliers are the points not belonging to the road. 
+    extract.filter(*obstCloud);
+
+    std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> segResult(obstCloud, planeCloud);
+
     return segResult;
 }
 
