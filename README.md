@@ -7,7 +7,7 @@ The following topics are covered in course projects:
 * **Point Cloud Segmentation** — Using Point Cloud Library (PCL) to segment point clouds, and performing planar model fitting using the RANSAC algorithm;
 * **Clustering Obstacles** — Using PCL to cluster obstacles, storing point cloud data with a KD-Tree, implementing Euclidean Clustering to identify point clusters, and applying bounding boxes around point clusters;
 * **Point Cloud Data (PCD) Workflows** — Working with real-world PCD-file datasets, filtering and processing PCD data, and performing obstacle detection;
-* And so much more ... (see 1-Lidar for full list of course topics).
+* **Project 1**: [Lidar_Obstacle_Detection](https://github.com/FacenZHOU/Sensor-Fusion/tree/lidar)
 ### Course 2: Camera
 * **Sensor Fusion & Autonomous Driving** — Understanding the SAE levels of autonomy, comparing typical OEM sensor configurations, and performing sensor modality tradeoff analysis against industry-grade criteria;
 * **Camera Technology & Collision Detection** — Reviewing essential camera working principles, performing image manipulation using OpenCV library, and designing a collision detection system based on motion models, Lidar and camera measurement data;
